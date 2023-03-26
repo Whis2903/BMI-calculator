@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BMI Calculator - Stay Healthy, learn your BMI score. Presented by Excel Strategies, LLC.</title>
+ 
+<style type="text/css">
+/*Formatting font sizes, colors and line spacing*/
+h1 {font-size: 30px; color:maroon;line-height:0.5;}
+h2 {font-size: 25px; color:#009933;line-height:0.5;}
+h3{font-size: 15px; color:#000066; font-family:"Comic Sans MS"; line-height:0.5;}
+h4{font-size: 25px; color:maroon; font-weight:bold; line-height:0.1;}
+h5 {font-size: 20px; color:#000066; font-family:"Comic Sans MS"; line-height:0.1;}
+p.small {line-height: 10%;}
+ 
+/*Formatting form size, shape, and color*/
+form {width: 320px;
+    margin-left: 80px;
+    margin-top: 20px;
+    border: 5px  double  #009933;
+    border-radius: 3em;
+    padding: 1em;
+    background: #FCFCFC;}
+ 
+/*Formatting textboxes*/
+input, textarea {
+    font: 1em sans-serif;
+    width: 65px;
+    box-sizing: border-box;
+    background: 10px 10px 5px #FFFFD6;
+    color: maroon;
+    font-weight: bold;}
+</style>
+</head>
+<script type = "text/javascript">
+ 
+/* BMI Calculator function*/
+    function BMICalculate()
+     
+/* Accept input variables*/
+    {
+    var weight = document.getElementById('weight').value;
+    var heightft = document.getElementById('heightft').value;
+     
+    /* Error Handling  for invalid data entered*/
+   if (weight == "") {
+                alert("Please enter your weight.");
+                return;  }
+   if (heightft == "") {
+                alert("Please enter your height.");
+                return;  }  
+   if (weight < 0) {
+                alert("Your weight can only be negative in Theoretical Physics..., NOT in real life.");
+                return;  }
+   if (weight < 30) {
+                alert("Weighing " + weight  + " lbs, you must be a child, this is Adult BMI calculator!");
+                return;  }
+   if (weight > 1500) {
+                alert("Do you really weigh " + weight + " pounds?!");
+                return;  }
+   if (heightft < 0) {
+                alert("Your can not possibly have a negative height!");
+                return;  }
+   if (heightft < 3) {
+                alert("Standing " + heightft +" feet tall, you must be a child, this is Adult BMI calculator!");
+                return;   }
+   if (heightft > 10) {
+                alert("Are you really "  + heightft + " feet tall?!");
+                return;  }
+         
+  /* Performing calculations */
+    var heightin = document.getElementById('heightin').value;
+    var height = heightft*12 + +heightin;
+     
+    BMI.innerHTML = Math.round((weight /(height*height)) );
+    getDescription(BMI.innerHTML);   }
+     
+/* Slider function to dynamically display inches portion of the height selected */
+ function Slider()
+    {heightin_op.innerHTML = document.getElementById('heightin').value;}
+ 
+/* Interpretation of BMI value */
+ function getDescription(thisBMI)
+ 
+    { var Description = "";
+            if (thisBMI<18.5)
+                Description ="Underweight - eat a bagel!";
+            else if (thisBMI>=18.5 && thisBMI<=24.99)
+                Description ="Normal - keep it up!";
+            else if (thisBMI>=25 && thisBMI<=29.99)
+                Description ="Overweight - exercise more!";
+            else if (thisBMI>=30 && thisBMI<=39.99)
+                Description ="Obese - get off the couch!";
+            else if (thisBMI>=40)
+        Description ="Morbidly Obese - take action!";
+      else Description ="Please check your input values, BMI cannot be calculated.";
+         
+        var DESC = document.getElementById('DESC');
+        DESC.innerHTML = Description;
+    }
+     
+  /* Reset Button */
+   function Clear()
+    {
+        document.getElementById('weight').value = "";
+        document.getElementById('heightft').value = "";
+        document.getElementById('heightin').value = "3";
+        document.getElementById('BMI').value = "";
+        document.getElementById('DESC').value = "";
+        BMI.innerHTML = "";
+        DESC.innerHTML = "";
+        heightin_op.innerHTML = "3";
+    }
+</script>
+<form>
+    <a href="http://blog.excelstrategiesllc.com" target="_blank">
+    </a>
+    <h1> BMI Calculator </h1>
+     
+    <!-- Setting up form elements for data input-->
+    <h3>Enter your weight in pounds:</h3>
+    <input type="number"  id="weight" placeholder = "236">
+    <b>lbs.</b>
+    <br>
+    <h3>Enter you height (in feet and inches):</h3>
+    <input type="number" id="heightft" placeholder = "6">
+    <b>ft.</b>
+     
+    <p class="small"><input type="range" min="0" max="11" value="3" step="1"  id="heightin" style="width:90px;" oninput="Slider()" onchange="Slider()">
+    <b><label id="heightin_op">3 </label> in.</b></p>
+     
+     
+    <input type="button" value="Calculate" onClick="BMICalculate()" style="width:90px;"> 
+    &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; 
+    <input type="button" value="Clear" onClick="Clear()" style="width:90px;">
+     
+    <h2>Your BMI is:</h2>
+     
+    <!-- Output BMI value and its description -->
+    <h4><label id="BMI"></label></h4>
+    <h5><label id="DESC"></label></h5>
+     
+    </form>
